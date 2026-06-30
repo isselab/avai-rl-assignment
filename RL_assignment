@@ -1,0 +1,56 @@
+In the given autonomous race car stack, the inputs available to us are the LiDAR scan (topic /scan) and the raw odometry (topic /odom) data published by the Gazebo simulation. RoboRacerEnv acts as the bridge between the student Jupyter notebook and the Gazebo simulation. It converts /scan and /odom into an observation vector for the RL model, and converts the selected RL action into a /cmd_vel command for the car.
+This assignment gives you an understanding of how the important components of an RL package are constructed such as, 
+•	Observation vectors from /scan and /odom. 
+•	Value functions in RL (DQN and PPO)
+•	Reward Functions
+using the agent : car, environment : gazebo simulation
+From the given picture the whole RL loop is defined. And by referring to the current implementation of roboracer_rl package, complete the tasks below.
+
+--------------------------------
+RL loop:
+
+Gazebo simulation
+    publishes
+/scan + /odom
+    read by
+RoboRacerEnv
+    converted into observation vector
+    given to
+student Jupyter notebook / train_student.py
+    DQN/PPO selects action
+    sent back through
+RoboRacerEnv
+    publishes
+/cmd_vel
+    controls
+Gazebo car
+
+--------------------------------
+
+Task 1 : The Observation Vector
+Reference file in the RL stack: gym_env.py --> _observation(), _sectorize_scan()
+
+The agent cannot directly see the Gazebo world or the track. It only receives a numerical observation vector built from the LiDAR scan topic /scan and odometry topic /odom. In this task, you will understand how RoboRacerEnv converts raw sensor data into sectorized LiDAR values, speed information, and previous steering information used as input to the RL model.
+
+--------------------------------
+
+Task 2 : The Reward Function
+Reference file: gym_env.py --> _reward()
+
+The agent learns from a single scalar reward given after every action. This reward defines what "good driving" means for the RoboRacer car. In this task, you will test and reason about reward terms such as forward movement, wall distance, steering smoothness, and crash penalty, and understand how they shape the learned driving behavior.
+
+---------------------------------
+
+Task 3 : The Value Function and Training with DQN
+Reference file: train.py --> DQN configuration block
+Reference file: train_student.py --> student training script
+
+This part of the RL loop turns an observation into an action using a neural network. In DQN, the network estimates the action-value function Q(s, a), which tells how good each possible action is in the current state. In this task, you will understand the DQN training script, examine important hyperparameters, and see how RoboRacerEnv connects Gazebo sensor topics /scan and /odom to the RL model and publishes the selected action back to /cmd_vel.
+
+---------------------------------
+
+Github repository link for roboracer_rl package:
+https://github.com/tarunBhyri9/rrstack/tree/main
+
+Folder:
+packages/src/roboracer_rl
