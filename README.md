@@ -4,7 +4,7 @@ This repository contains the Jupyter notebook and supporting files for the RoboR
 
 ## Contents
 
-- `roboracer_rl_assignment_v2.ipynb`  
+- `roboracer_rl_assignment.ipynb`  
   Main Jupyter notebook for the assignment.
 
 - `RL_assignment`  
